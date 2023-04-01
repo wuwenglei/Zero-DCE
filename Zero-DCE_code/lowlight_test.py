@@ -21,9 +21,18 @@ def lowlight(image_path):
 	os.environ['CUDA_VISIBLE_DEVICES']='0'
 	data_lowlight = Image.open(image_path)
 
- 
+	# added
+	width, height = data_lowlight.size
+	if width > 1280 or height > 1280:
+		if width >= height:
+			transform = transforms.Resize(size = (1280, 1280 * height / width))
+		else:
+			transform = transforms.Resize(size = (1280 * width / height, 1280))
+		data_lowlight = transform(data_lowlight)
 
 	data_lowlight = (np.asarray(data_lowlight)/255.0)
+
+	# added
 	if len(data_lowlight.shape) == 2:
 		data_lowlight = np.dstack((data_lowlight, data_lowlight, data_lowlight))
 	elif data_lowlight.shape[2] == 4:
