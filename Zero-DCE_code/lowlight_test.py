@@ -26,7 +26,8 @@ def lowlight(image_path):
 	data_lowlight = (np.asarray(data_lowlight)/255.0)
 	if len(data_lowlight.shape) == 2:
 		data_lowlight = np.dstack((data_lowlight, data_lowlight, data_lowlight))
-
+	elif data_lowlight.shape[2] == 4:
+		data_lowlight = np.delete(data_lowlight, 3, 2)
 
 	data_lowlight = torch.from_numpy(data_lowlight).float()
 	data_lowlight = data_lowlight.permute(2,0,1)
