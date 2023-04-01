@@ -25,9 +25,9 @@ def lowlight(image_path):
 	width, height = data_lowlight.size
 	if width > 1280 or height > 1280:
 		if width >= height:
-			transform = transforms.Resize(size = (1280, int(1280 * height / width)))
+			transform = transforms.Resize(size = (int(1280 * height / width), 1280))
 		else:
-			transform = transforms.Resize(size = (int(1280 * width / height), 1280))
+			transform = transforms.Resize(size = (1280, int(1280 * width / height)))
 		data_lowlight = transform(data_lowlight)
 
 	data_lowlight = (np.asarray(data_lowlight)/255.0)
